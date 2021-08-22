@@ -1,4 +1,4 @@
-function listCandidatos() {
+function listaVagas() {
     fetch('https://localhost:5001/api/Profissoes').then(async function (response) {
         let vagas = await response.json();
         console.log(vagas);
@@ -32,4 +32,4 @@ function listCandidatos() {
     });
 }
 
-listCandidatos();
+listaVagas();

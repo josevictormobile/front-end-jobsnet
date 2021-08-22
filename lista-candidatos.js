@@ -1,5 +1,5 @@
 function listCandidatos(){
-    fetch('https://localhost:5001/api/candidato').then(async function (response) {
+    fetch('https://localhost:5001/api/candidatos').then(async function (response) {
             let candidatos = await response.json();
             console.log(candidatos);
             let html = "";
@@ -9,7 +9,7 @@ function listCandidatos(){
                 <tr>
                     <th>${candidatos[i].id}</th>
                     <td>${candidatos[i].nome}</td>
-                    <td>${candidatos[i].idade}</td>
+                    <td>${candidatos[i].nascimento}</td>
                     <td>${candidatos[i].cep}</td>
                     <td>${candidatos[i].telefone}</td>
                     <td>${candidatos[i].email}</td>
