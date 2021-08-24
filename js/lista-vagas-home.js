@@ -1,11 +1,11 @@
-function listaVagas() {
+function listavagas() {
     fetch('https://localhost:5001/api/Profissoes').then(async function (response) {
         let vagas = await response.json();
         console.log(vagas);
         let html = "";
         for (let i = 0; i < vagas.length; i++) {
-            html +=`
-                <div class="box column is-full is-block">
+            html += `
+                <div class="box column is-6 is-flex is-inline-block">
                     <div>
                         <figure class="image is-32x32">
                             <img src="./resources/job-icon.png" alt="job-icon">
@@ -19,7 +19,7 @@ function listaVagas() {
                             <p>${vagas[i].descricao}</p>
                         </div>
                         <div class="column">
-                            <a href="./cadastro_candidato.html?id_vaga=${vagas[i].id}" class="button is-primary ">Candidate-se</a>
+                            <a href="./html/cadastro_candidato.html?id_vaga=${vagas[i].id}" class="button is-primary ">Candidate-se</a>
                         </div>
                     </div>
                 </div>
@@ -32,4 +32,4 @@ function listaVagas() {
     });
 }
 
-listaVagas();
+listavagas();

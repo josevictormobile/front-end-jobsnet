@@ -13,7 +13,7 @@ function listCandidatos(){
                     <td>${candidatos[i].cep}</td>
                     <td>${candidatos[i].telefone}</td>
                     <td>${candidatos[i].email}</td>
-                    <td>Nada Ainda</td>
+                    <td><a href="./vaga_id.html?id_vaga=${candidatos[i].profissaoId}">${candidatos[i].profissaoId}</a></td>
                 </tr>
                 `
             }

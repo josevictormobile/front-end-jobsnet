@@ -5,32 +5,32 @@
     Soma = 0;
 
     if (strCPF == "00000000000")
-        return swal('cpf invalido', 'error', 'error');
+        return swal('CPF INVÁLIDO', 'error', 'error');
     if (strCPF == "11111111111")
-        return swal('cpf invalido', 'error', 'error');
+        return swal('CPF INVÁLIDO', 'error', 'error');
     if (strCPF == "22222222222")
-        return swal('cpf invalido', 'error', 'error');
+        return swal('CPF INVÁLIDO', 'error', 'error');
     if (strCPF == "33333333333")
-        return swal('cpf invalido', 'error', 'error');
+        return swal('CPF INVÁLIDO', 'error', 'error');
     if (strCPF == "44444444444")
-        return swal('cpf invalido', 'error', 'error');
+        return swal('CPF INVÁLIDO', 'error', 'error');
     if (strCPF == "55555555555")
-        return swal('cpf invalido', 'error', 'error');
+        return swal('CPF INVÁLIDO', 'error', 'error');
     if (strCPF == "66666666666")
-        return swal('cpf invalido', 'error', 'error');
+        return swal('CPF INVÁLIDO', 'error', 'error');
     if (strCPF == "77777777777")
-        return swal('cpf invalido', 'error', 'error');
+        return swal('CPF INVÁLIDO', 'error', 'error');
     if (strCPF == "88888888888")
-        return swal('cpf invalido', 'error', 'error');
+        return swal('CPF INVÁLIDO', 'error', 'error');
     if (strCPF == "99999999999")
-        return swal('cpf invalido', 'error', 'error');
+        return swal('CPF INVÁLIDO', 'error', 'error');
     for (i = 1; i <= 9; i++)
         Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (11 - i);
     Resto = (Soma * 10) % 11;
     if ((Resto == 10) || (Resto == 11))
         Resto = 0;
     if (Resto != parseInt(strCPF.substring(9, 10)))
-        return swal('cpf invalido', 'error', 'error');
+        return swal('CPF INVÁLIDO', 'error', 'error');
     Soma = 0;
     for (i = 1; i <= 10; i++)
         Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (12 - i);
@@ -38,12 +38,12 @@
     if ((Resto == 10) || (Resto == 11))
         Resto = 0;
     if (Resto != parseInt(strCPF.substring(10, 11)))
-        return swal('cpf invalido', 'error', 'error');
-    return true//getElementById('span-cpf').;
+        return swal('CPF INVÁLIDO', 'error', 'error');
+    return true
 }
 
 function consultaCEP() {
-    mostraEndereco()
+    
     var cep = document.getElementById('cep').value.replace(/\D/g, '');
     console.log(cep);
     var url = "https://viacep.com.br/ws/" + cep + "/json/";
@@ -52,7 +52,6 @@ function consultaCEP() {
 
     request.open('GET', url);
     request.onerror = (e) => {
-        //document.getElementById('caixa-erro').classList.toggle('fadeIn');
         swal('CEP INVÁLIDO', '', 'error')
     }
 
@@ -60,7 +59,6 @@ function consultaCEP() {
         var response = JSON.parse(request.responseText);
 
         if (response.erro === true) {
-            //document.getElementById('caixa-erro').classList.toggle('fadeIn');
             swal('CEP NÃO ENCONTRADO', '', 'error')
         } else {
             console.log(response);
@@ -68,8 +66,6 @@ function consultaCEP() {
             document.getElementById('bairro').value = response.bairro;
             document.getElementById('cidade').value = response.localidade;
             document.getElementById('uf').value = response.uf;
-            document.getElementById('logradouro').disabled = true;
-            document.getElementById('bairro').disabled = true;
             document.getElementById('cidade').disabled = true;
             document.getElementById('uf').disabled = true;
         }
@@ -120,10 +116,11 @@ function cadastrar() {
             document.getElementById('uf').value = "";
             document.getElementById('telefone').value = "";
             document.getElementById('email').value = ""; 
-            swal("Cadastro Realizado ComSucesso","",'success');
+            swal("Cadastro Realizado Com Sucesso","",'success');
         }
         const content = await rawResponse.json();
-        if(content=='CBE'){
+        console.log(content);
+        if(content =='CDB'){
             swal('CPF JÁ CADASTRADO','','error');
         }
     }
@@ -135,14 +132,10 @@ function cadastrar() {
     
 }
 
-function mostraEndereco() {
-    document.getElementById('caixa_endereco').classList.toggle('is-hidden');
-}
-
 function cadastrarVaga() {
     var vaga = {
-        nome: document.getElementById('nome_vaga').value,
-        descricao: document.getElementById('descricao').value,
+        nome: document.getElementById('nome_vaga').value.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase(),
+        descricao: document.getElementById('descricao').value.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase(),
     }
     console.log(vaga);
     let enviarCandidato = async (vaga) => {
@@ -154,17 +147,22 @@ function cadastrarVaga() {
             },
             body: JSON.stringify(vaga)
         });
+        const response = await rawResponse;
+        if(response.status == '200' || response.status == '201' || response.status=="204"){
+            document.getElementById('nome_vaga').value = "";
+            document.getElementById('descricao').value = ""; 
+            swal("Cadastro de Vaga Realizado Com Sucesso","",'success');
+        }
         const content = await rawResponse.json();
         console.log(content);
+
+        if(content =='NDB'){
+            swal('NOME DE VAGA JÁ CADASTRADO','','error');
+        }
     }
     enviarCandidato(vaga);
 }
 
-
-
-// var originalText = "éàçèñ"
-// var result = originalText.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase
-// console.log(result)
 
 
 
